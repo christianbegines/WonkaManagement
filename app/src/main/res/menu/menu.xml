@@ -12,4 +12,10 @@
         app:showAsAction=""
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         android:title="search by gender" />
+
+    <item android:id="@+id/proffesion"
+        android:icon="@drawable/search_3_16"
+        app:showAsAction=""
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        android:title="search by proffesion" />
 </menu>

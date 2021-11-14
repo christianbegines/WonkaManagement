@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    xmlns:tool="http://schemas.android.com/tools"
     android:id="@+id/item_layout"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/cardview_dark_background"
-    xmlns:tool="http://schemas.android.com/tools">
+    android:background="@color/cardview_dark_background">
+
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/primaryVariantColor"
         android:layout_gravity="top"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
+        android:backgroundTint="@color/primaryVariantColor"
         card_view:cardCornerRadius="4dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,7 +27,7 @@
                 android:id="@+id/image"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="32dp"
                 card_view:layout_constraintBottom_toBottomOf="parent"
@@ -75,6 +76,15 @@
                 android:textSize="25sp"
                 card_view:layout_constraintStart_toStartOf="@+id/firstName"
                 card_view:layout_constraintTop_toBottomOf="@+id/firstName" />
+
+            <ImageView
+                android:id="@+id/gender_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                card_view:layout_constraintEnd_toEndOf="@+id/image"
+                card_view:layout_constraintStart_toStartOf="@+id/image"
+                card_view:layout_constraintTop_toBottomOf="@+id/image" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

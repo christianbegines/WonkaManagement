@@ -32,14 +32,14 @@ import androidx.appcompat.widget.Toolbar
 
 
 @AndroidEntryPoint
-class ListFragment : Fragment(), Toolbar.OnMenuItemClickListener,View.OnClickListener{
+class ListFragment : Fragment(), Toolbar.OnMenuItemClickListener, View.OnClickListener {
 
     private var _binding: FragmentListBinding? = null
     private val binding: FragmentListBinding
         get() = _binding!!
     private var getJob: Job? = null
-    private lateinit var adapter :OompaLoompaAdapter
-
+    private lateinit var adapter: OompaLoompaAdapter
+    private var filterByProffesion: Boolean = false
     private val viewModel: ListViewModel by viewModels()
     private val filterType = 0
     override fun onCreateView(
@@ -47,8 +47,8 @@ class ListFragment : Fragment(), Toolbar.OnMenuItemClickListener,View.OnClickLis
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentListBinding.inflate(inflater,container,false)
-        adapter = OompaLoompaAdapter{navigateToDetail(it)}
+        _binding = FragmentListBinding.inflate(inflater, container, false)
+        adapter = OompaLoompaAdapter { navigateToDetail(it) }
         binding.oompaloompaList.adapter = adapter
         binding.mainToolbar.setOnMenuItemClickListener(this)
         binding.radioFemale.setOnClickListener(this)
@@ -62,7 +62,7 @@ class ListFragment : Fragment(), Toolbar.OnMenuItemClickListener,View.OnClickLis
         return binding.root
     }
 
-    private fun configureToolbar(){
+    private fun configureToolbar() {
         val searchIcon = binding.searchView.findViewById<ImageView>(R.id.search_mag_icon)
         searchIcon.setColorFilter(Color.WHITE)
 
@@ -74,17 +74,23 @@ class ListFragment : Fragment(), Toolbar.OnMenuItemClickListener,View.OnClickLis
         searchEditText.setTextColor(resources.getColor(R.color.white))
         searchEditText.setHintTextColor(resources.getColor(R.color.white))
 
-        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                getOompaLoompas(FilterOompaLoompa(query.toString()))
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                if(newText == ""){
-                    getOompaLoompas(FilterOompaLoompa())
-                }else{
-                    getOompaLoompas(FilterOompaLoompa(newText.toString()))
+                if (filterByProffesion) {
+                    if (newText != "")
+                        getOompaLoompas(FilterOompaLoompa(null, null, newText.toString()))
+                    else
+                        getOompaLoompas(FilterOompaLoompa())
+                } else {
+                    if (newText == "") {
+                        getOompaLoompas(FilterOompaLoompa())
+                    } else {
+                        getOompaLoompas(FilterOompaLoompa(newText.toString()))
+                    }
                 }
                 return false
             }
@@ -92,7 +98,7 @@ class ListFragment : Fragment(), Toolbar.OnMenuItemClickListener,View.OnClickLis
         })
     }
 
-    private fun getOompaLoompas(query:FilterOompaLoompa){
+    private fun getOompaLoompas(query: FilterOompaLoompa) {
         getJob?.cancel()
         getJob = lifecycleScope.launch {
             viewModel.getOompaLoompas(query).collectLatest {
@@ -101,18 +107,26 @@ class ListFragment : Fragment(), Toolbar.OnMenuItemClickListener,View.OnClickLis
         }
     }
 
-    private fun navigateToDetail(item:OompaLoompa){
+    private fun navigateToDetail(item: OompaLoompa) {
         val action = ListFragmentDirections.fromListToDetail(item.id.toString())
         findNavController().navigate(action)
     }
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {
-        when(item?.itemId){
-            R.id.gender->{
+        when (item?.itemId) {
+            R.id.gender -> {
                 binding.filterLayout.visibility = View.VISIBLE
             }
+            R.id.proffesion -> {
+                filterByProffesion = true
+                binding.mainToolbar.menu.findItem(R.id.search).expandActionView()
+            }
+            R.id.search -> {
+                filterByProffesion = false
+                binding.mainToolbar.menu.findItem(R.id.search).expandActionView()
+            }
         }
-        return true;
+        return true
     }
 
 
@@ -124,15 +138,15 @@ class ListFragment : Fragment(), Toolbar.OnMenuItemClickListener,View.OnClickLis
             when (view.getId()) {
                 R.id.radio_female ->
                     if (checked) {
-                        getOompaLoompas(FilterOompaLoompa(null,"F",null))
+                        getOompaLoompas(FilterOompaLoompa(null, "F", null))
                     }
                 R.id.radio_male ->
                     if (checked) {
-                        getOompaLoompas(FilterOompaLoompa(null,"M",null))
+                        getOompaLoompas(FilterOompaLoompa(null, "M", null))
                     }
-                R.id.radio_none->
-                    if(checked){
-                        getOompaLoompas(FilterOompaLoompa(null,null,null))
+                R.id.radio_none ->
+                    if (checked) {
+                        getOompaLoompas(FilterOompaLoompa(null, null, null))
                     }
             }
         }
