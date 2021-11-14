@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/search"
+        android:icon="@drawable/search_3_16"
+        app:showAsAction="collapseActionView|ifRoom"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        android:title="Search by name" />
+
+    <item android:id="@+id/gender"
+        android:icon="@drawable/search_3_16"
+        app:showAsAction=""
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        android:title="search by gender" />
+</menu>

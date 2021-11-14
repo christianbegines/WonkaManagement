@@ -3,11 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/chris/AndroidStudioProjects/WonkaManagement/app/src/main/res/drawable/circle.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/WonkaManagement/app/src/main/res/drawable/circular_image_layer.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/WonkaManagement/app/src/main/res/font/wonka.xml" value="0.1787037037037037" />
         <entry key="..\:/Users/chris/AndroidStudioProjects/WonkaManagement/app/src/main/res/layout/activity_main.xml" value="0.19791666666666666" />
-        <entry key="..\:/Users/chris/AndroidStudioProjects/WonkaManagement/app/src/main/res/layout/fragment_detail.xml" value="0.33469202898550726" />
-        <entry key="..\:/Users/chris/AndroidStudioProjects/WonkaManagement/app/src/main/res/layout/fragment_list.xml" value="0.33469202898550726" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/WonkaManagement/app/src/main/res/layout/fragment_detail.xml" value="0.21" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/WonkaManagement/app/src/main/res/layout/fragment_list.xml" value="0.33" />
         <entry key="..\:/Users/chris/AndroidStudioProjects/WonkaManagement/app/src/main/res/layout/list_fragment.xml" value="0.33469202898550726" />
-        <entry key="..\:/Users/chris/AndroidStudioProjects/WonkaManagement/app/src/main/res/layout/list_item.xml" value="0.33469202898550726" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/WonkaManagement/app/src/main/res/layout/list_item.xml" value="0.1" />
+        <entry key="..\:/Users/chris/AndroidStudioProjects/WonkaManagement/app/src/main/res/menu/menu.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>
@@ -20,7 +24,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.33469202898550726" />
+        <option name="scale" value="0.22" />
       </ProjectState>
     </option>
   </component>

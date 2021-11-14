@@ -22,5 +22,4 @@ class DetailFragment : Fragment() {
        _binding = FragmentDetailBinding.inflate(inflater)
         return binding.root
     }
-
 }

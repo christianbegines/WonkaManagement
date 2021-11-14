@@ -1,6 +1,9 @@
 <resources>
-    <string name="app_name">WonkaManagement</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">Wonka Management</string>
     <string name="refresh">Refresh</string>
+    <string name="search">search</string>
+    <string name="male">Male</string>
+    <string name="female">female</string>
+    <string name="gender">Gender</string>
+    <string name="none">none</string>
 </resources>
