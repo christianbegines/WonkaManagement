@@ -1,31 +1,32 @@
 package es.christianbegines.wonkamanagement.ui.list
 
 import android.app.AlertDialog
-import android.graphics.Color
 import android.os.Bundle
-import android.view.*
-import androidx.fragment.app.Fragment
-import android.widget.ImageView
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.RadioButton
 import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import dagger.hilt.android.AndroidEntryPoint
 import es.christianbegines.wonkamanagement.R
 import es.christianbegines.wonkamanagement.databinding.FragmentListBinding
 import es.christianbegines.wonkamanagement.helpers.OompaLoompaAdapter
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import es.christianbegines.wonkamanagement.models.FilterOompaLoompa
 import es.christianbegines.wonkamanagement.models.OompaLoompa
-import android.widget.EditText
-import android.widget.RadioButton
-import androidx.appcompat.widget.Toolbar
-import androidx.paging.LoadState
-import es.christianbegines.wonkamanagement.ui.detail.DetailViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -37,15 +38,39 @@ class ListFragment : Fragment(), Toolbar.OnMenuItemClickListener, View.OnClickLi
     private var getJob: Job? = null
     private lateinit var adapter: OompaLoompaAdapter
     private val viewModel: ListViewModel by viewModels()
-    private val filter: FilterOompaLoompa = FilterOompaLoompa()
+    private lateinit var filter: FilterOompaLoompa
     private var filterByProffesion = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentListBinding.inflate(inflater, container, false)
+        lifecycleScope.launch {
+            filter = FilterOompaLoompa()
+        }
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.state.onEach {
+            handleState(it)
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
+        binding.mainToolbar.setOnMenuItemClickListener(this)
+        binding.radioFemale.setOnClickListener(this)
+        binding.radioMale.setOnClickListener(this)
+        binding.radioNone.setOnClickListener(this)
+        binding.refresh.setOnClickListener(this)
+        setHasOptionsMenu(true)
+
+        configureToolbar()
+        configureAdapter()
+
+        getOompaLoompas(FilterOompaLoompa())
+    }
+
+    private fun configureAdapter() {
         adapter = OompaLoompaAdapter { navigateToDetail(it) }
         adapter.addLoadStateListener { loadState ->
             when (loadState.refresh) {
@@ -65,23 +90,6 @@ class ListFragment : Fragment(), Toolbar.OnMenuItemClickListener, View.OnClickLi
             }
         }
         binding.oompaloompaList.adapter = adapter
-        binding.mainToolbar.setOnMenuItemClickListener(this)
-        binding.radioFemale.setOnClickListener(this)
-        binding.radioMale.setOnClickListener(this)
-        binding.radioNone.setOnClickListener(this)
-        binding.refresh.setOnClickListener(this)
-
-        setHasOptionsMenu(true)
-        configureToolbar()
-        getOompaLoompas(FilterOompaLoompa())
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.state.onEach {
-            handleState(it)
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun configureToolbar() {
@@ -89,8 +97,8 @@ class ListFragment : Fragment(), Toolbar.OnMenuItemClickListener, View.OnClickLi
         val searchView = mSearchMenuItem.actionView as SearchView
         val searchEditText =
             searchView.findViewById<View>(R.id.search_src_text) as EditText
-        searchEditText.setTextColor(resources.getColor(R.color.white))
-        searchEditText.setHintTextColor(resources.getColor(R.color.white))
+        searchEditText.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+        searchEditText.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.white))
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
@@ -111,15 +119,16 @@ class ListFragment : Fragment(), Toolbar.OnMenuItemClickListener, View.OnClickLi
                 }
                 return false
             }
-
         })
     }
 
     private fun handleState(state: ListViewModel.State) {
         when (state) {
-            is ListViewModel.State.Loading -> {}
+            is ListViewModel.State.Loading -> {
+            }
             is ListViewModel.State.Error -> handleError(state.message)
-            is ListViewModel.State.Success -> {}
+            is ListViewModel.State.Success -> {
+            }
         }
     }
 
@@ -176,9 +185,9 @@ class ListFragment : Fragment(), Toolbar.OnMenuItemClickListener, View.OnClickLi
                         binding.filterLayout.visibility = View.GONE
                     }
             }
-        }else{
-            when(view.id){
-                R.id.refresh->{
+        } else {
+            when (view.id) {
+                R.id.refresh -> {
                     getOompaLoompas(FilterOompaLoompa())
                 }
             }
