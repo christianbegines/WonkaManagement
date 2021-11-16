@@ -19,7 +19,6 @@ import androidx.paging.LoadState
 import dagger.hilt.android.AndroidEntryPoint
 import es.christianbegines.wonkamanagement.R
 import es.christianbegines.wonkamanagement.databinding.FragmentListBinding
-import es.christianbegines.wonkamanagement.helpers.OompaLoompaAdapter
 import es.christianbegines.wonkamanagement.models.FilterOompaLoompa
 import es.christianbegines.wonkamanagement.models.OompaLoompa
 import kotlinx.coroutines.Job

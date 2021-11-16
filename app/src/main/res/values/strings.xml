@@ -10,4 +10,9 @@
     <string name="age">Age:</string>
     <string name="retry">Retry</string>
     <string name="ok">Accept</string>
+    <string name="see_favourites">See favorites</string>
+    <string name="food">Food:</string>
+    <string name="color">Color:</string>
+    <string name="song">Song:</string>
+    <string name="height">Height:</string>
 </resources>

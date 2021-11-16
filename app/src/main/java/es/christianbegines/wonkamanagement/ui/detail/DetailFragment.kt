@@ -2,21 +2,27 @@ package es.christianbegines.wonkamanagement.ui.detail
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import es.christianbegines.wonkamanagement.R
+import es.christianbegines.wonkamanagement.databinding.FavoriteDialogBinding
 import es.christianbegines.wonkamanagement.databinding.FragmentDetailBinding
 import es.christianbegines.wonkamanagement.helpers.loadUrl
 import es.christianbegines.wonkamanagement.models.OompaLoompa
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+
+
+
 
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
@@ -63,6 +69,10 @@ class DetailFragment : Fragment() {
         binding.profession.text = oommpaLoompa.profession
         binding.age.text = oommpaLoompa.age.toString()
         binding.description.text = oommpaLoompa.description
+        binding.country.text = oommpaLoompa.country
+        binding.email.text = oommpaLoompa.email
+        binding.height.text = oommpaLoompa.height.toString()
+        binding.quote.text = oommpaLoompa.quote
         when (oommpaLoompa.gender) {
             "F" -> {
                 binding.genderImage.setBackgroundResource(R.drawable.female)
@@ -70,6 +80,9 @@ class DetailFragment : Fragment() {
             "M" -> {
                 binding.genderImage.setBackgroundResource(R.drawable.male)
             }
+        }
+        binding.favButton.setOnClickListener{
+            showDialog(oommpaLoompa)
         }
     }
 
@@ -80,6 +93,7 @@ class DetailFragment : Fragment() {
                 setPositiveButton(
                     R.string.ok
                 ) { dialog, _ ->
+                    requireActivity().onBackPressed()
                     dialog.cancel()
                 }
                 setMessage(message)
@@ -90,5 +104,17 @@ class DetailFragment : Fragment() {
         }
 
     }
-
+    private fun showDialog(item:OompaLoompa) {
+        activity?.let {
+            val dialog = Dialog(it)
+            val bind :FavoriteDialogBinding = FavoriteDialogBinding.inflate(requireActivity().layoutInflater)
+            dialog.setContentView(bind.root)
+            dialog.setTitle("Favorites")
+            bind.color.text = item.favorite.color
+            bind.food.text = item.favorite.food
+            bind.song.text = item.favorite.song
+            bind.randomString.text = item.favorite.randomString
+            dialog.show()
+        }
+    }
 }

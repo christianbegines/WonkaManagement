@@ -14,7 +14,7 @@ data class OompaLoompa (
     @SerializedName("country") var country : String,
     @SerializedName("height") var height : Int,
     @SerializedName("id") var id : Int,
-    @SerializedName("quote") var quote : String,
+    @SerializedName("quota") var quote : String,
     @SerializedName("description") var description : String
 
 )

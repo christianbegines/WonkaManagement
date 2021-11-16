@@ -1,22 +1,15 @@
-package es.christianbegines.wonkamanagement.helpers
+package es.christianbegines.wonkamanagement.ui.list
 
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.graphics.Color
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
-import androidx.paging.PagingData
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import es.christianbegines.wonkamanagement.R
 import es.christianbegines.wonkamanagement.databinding.ListItemBinding
+import es.christianbegines.wonkamanagement.helpers.loadUrl
 import es.christianbegines.wonkamanagement.models.OompaLoompa
-import java.util.*
-import kotlin.collections.ArrayList
 
 class OompaLoompaAdapter(
     private val adapterAction: (OompaLoompa) -> Unit
