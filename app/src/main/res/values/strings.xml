@@ -6,4 +6,8 @@
     <string name="female">female</string>
     <string name="gender">Gender</string>
     <string name="none">none</string>
+    <string name="unknownError">Error desconocido</string>
+    <string name="age">Age:</string>
+    <string name="retry">Retry</string>
+    <string name="ok">Accept</string>
 </resources>

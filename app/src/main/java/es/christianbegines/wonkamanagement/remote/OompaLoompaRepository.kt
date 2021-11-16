@@ -18,6 +18,9 @@ class OompaLoompaRepository @Inject constructor(private val service:AppService) 
         ).flow
     }
 
+    suspend fun getOompaLompa(id:String):OompaLoompa{
+        return service.getOompaLoompa(id)
+    }
     companion object {
         private const val NETWORK_PAGE_SIZE = 25
     }

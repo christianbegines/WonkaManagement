@@ -17,7 +17,7 @@ class OompaLoompaPagingSource(
         val page = params.key ?: UNSPLASH_STARTING_PAGE_INDEX
         return try {
             val response = service.getOompaLoompas(page)
-            val oompaLoompas = filter(filterOompaLoompa,response.results)
+            val oompaLoompas = filter(filterOompaLoompa, response.results)
             LoadResult.Page(
                 data = oompaLoompas.toList(),
                 prevKey = if (page == UNSPLASH_STARTING_PAGE_INDEX) null else page - 1,
@@ -30,36 +30,27 @@ class OompaLoompaPagingSource(
 
     override fun getRefreshKey(state: PagingState<Int, OompaLoompa>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
-            // This loads starting from previous page, but since PagingConfig.initialLoadSize spans
-            // multiple pages, the initial load will still load items centered around
-            // anchorPosition. This also prevents needing to immediately launch prepend due to
-            // prefetchDistance.
             state.closestPageToPosition(anchorPosition)?.prevKey
         }
     }
 
     private fun filter(filter: FilterOompaLoompa, list: List<OompaLoompa>): List<OompaLoompa> {
-        var resultList:List<OompaLoompa>? = null
-        if (filter.name != null) {
-            resultList = list.filter {
-                it.firstName.lowercase().contains(filterOompaLoompa.name!!)
+        var oompaLoompas: List<OompaLoompa> = list
+        filter.gender?.let {
+            oompaLoompas= oompaLoompas.filter{
+                it.gender.lowercase().contains(filter.gender!!.lowercase())
             }
         }
-        if (filter.gender != null) {
-            resultList = list.filter {
-                it.gender.contains(filterOompaLoompa.gender!!)
+        filter.name?.let{
+            oompaLoompas = oompaLoompas.filter {
+                it.firstName.lowercase().contains(filter.name!!.lowercase())
             }
         }
-
-        if (filter.profession != null) {
-            resultList = list.filter {
-                it.profession.lowercase().contains(filterOompaLoompa.profession!!.lowercase())
+        filter.profession?.let{
+            oompaLoompas = oompaLoompas.filter {
+                it.profession.lowercase().contains(filter.profession!!.lowercase())
             }
         }
-        if(resultList == null){
-            return list
-        }else{
-            return resultList
-        }
+        return oompaLoompas
     }
 }

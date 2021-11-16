@@ -2,6 +2,7 @@ package es.christianbegines.wonkamanagement.remote
 
 import es.christianbegines.wonkamanagement.models.OompaLoompa
 import es.christianbegines.wonkamanagement.remote.models.OommpaLoompaResponse
+import kotlinx.coroutines.flow.Flow
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call

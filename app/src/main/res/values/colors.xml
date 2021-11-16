@@ -10,4 +10,5 @@
     <color name="primaryColor">#492A7A</color>
     <color name="primaryVariantColor">#958CCF</color>
     <color name="primaryOnColor">#8E2A79</color>
+    <color name="golden">#EFDD1A</color>
 </resources>
